@@ -43,15 +43,13 @@ app.post("/classify", async (req, res) => {
       temperature: 0.2,
     });
 
-    const generationList = response?.result?.generations;
-    const prediction = generationList?.[0]?.text?.trim();
-
-    console.log("🎯 Prediction:", prediction);
+    const prediction = response.generations?.[0]?.text?.trim();
 
     if (!prediction) {
       return res.status(400).json({ error: "AI could not classify input." });
     }
 
+    console.log("🎯 Prediction:", prediction);
     res.json({ category: prediction });
   } catch (err) {
     console.error("🔥 Cohere FULL error:", err);
@@ -60,6 +58,7 @@ app.post("/classify", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`✅ Cohere backend running on port ${PORT}`);
 });
