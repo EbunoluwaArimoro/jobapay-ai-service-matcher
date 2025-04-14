@@ -39,18 +39,18 @@ app.post("/classify", async (req, res) => {
       prompt: `You are a smart assistant. Based on the user input, identify the closest matching service category from this list:\n\n${categories.join(
         ", "
       )}\n\nUser input: "${input}"\n\nMatching category:`,
-      max_tokens: 20,
+      maxTokens: 20,
       temperature: 0.2,
     });
   
-    const prediction = response.generations[0]?.text?.trim();
+    const prediction = response.generations?.[0]?.text?.trim();
     console.log("🎯 Predicted:", prediction);
   
     res.json({ category: prediction });
   } catch (err) {
     console.error("🔥 Cohere FULL error:", err);
     res.status(500).json({ error: "Cohere classification failed." });
-  }  
+  }   
 
 const PORT = process.env.PORT || 5000;
 
