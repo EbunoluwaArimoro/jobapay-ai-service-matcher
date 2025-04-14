@@ -36,20 +36,31 @@ app.post("/classify", async (req, res) => {
   try {
     const response = await cohere.generate({
       model: "command",
-      prompt: `You are a smart assistant. Based on the user input, identify the closest matching service category from this list:\n\n${categories.join(
+      prompt: `Classify the following input into one of these services:\n\n${categories.join(
         ", "
-      )}\n\nUser input: "${input}"\n\nMatching category:`,
+      )}\n\nUser: "${input}"\n\nService:`,
       maxTokens: 20,
-      temperature: 0.2,
+      temperature: 0.3,
     });
 
-    const prediction = response.generations?.[0]?.text?.trim();
+    console.log("🔍 Raw Cohere response:", response);
 
-    if (!prediction) {
-      return res.status(400).json({ error: "AI could not classify input." });
+    let prediction = "";
+
+    // Defensive check for different possible response shapes
+    if (response?.generations?.[0]?.text) {
+      prediction = response.generations[0].text.trim();
+    } else if (response?.body?.generations?.[0]?.text) {
+      prediction = response.body.generations[0].text.trim();
+    } else if (response?.result?.generations?.[0]?.text) {
+      prediction = response.result.generations[0].text.trim();
     }
 
-    console.log("🎯 Prediction:", prediction);
+    if (!prediction) {
+      return res.status(500).json({ error: "AI could not classify input." });
+    }
+
+    console.log("🎯 Predicted:", prediction);
     res.json({ category: prediction });
   } catch (err) {
     console.error("🔥 Cohere FULL error:", err);
@@ -58,7 +69,6 @@ app.post("/classify", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
   console.log(`✅ Cohere backend running on port ${PORT}`);
 });
