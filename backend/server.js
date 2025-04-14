@@ -42,16 +42,15 @@ app.post("/classify", async (req, res) => {
       max_tokens: 20,
       temperature: 0.2,
     });
-
-    const prediction = response.body.generations[0]?.text?.trim();
+  
+    const prediction = response.generations[0]?.text?.trim();
     console.log("🎯 Predicted:", prediction);
-
+  
     res.json({ category: prediction });
   } catch (err) {
     console.error("🔥 Cohere FULL error:", err);
     res.status(500).json({ error: "Cohere classification failed." });
-  }
-});
+  }  
 
 const PORT = process.env.PORT || 5000;
 
