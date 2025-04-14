@@ -56,6 +56,8 @@ Category:
   }
 });
 
-app.listen(5000, () => {
-  console.log("✅ Cohere backend (using generate) running at http://localhost:5000");
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`✅ Cohere backend (using generate) running on port ${PORT}`);
 });

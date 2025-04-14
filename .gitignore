@@ -31,3 +31,6 @@ backend/.env
 
 # Ignore local OS/system files
 .DS_Store
+
+# Local Netlify folder
+.netlify
