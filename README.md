@@ -4,12 +4,17 @@ The **Smart Service Provider Finder** is a modern web application designed to he
 
 ## Features
 
-- **Search by Location and Service Type**: Easily find service providers based on your location and the type of service you need.
-- **AI-Powered Service Classification**: Uses the Cohere API to intelligently classify user queries into predefined service categories.
+- **Search by Location and Service Type**: 
+Easily find service providers based on your location and the type of service you need.
+- **AI-Powered Service Classification**: 
+Uses the Cohere API to intelligently classify user queries into predefined service categories.
 - **Detailed Provider Information**: View provider details, including their services, locations, ratings, and user reviews.
-- **Responsive Design**: Optimized for both desktop and mobile devices to ensure a seamless experience.
-- **Interactive Reviews**: See average ratings and detailed reviews for each provider.
-- **Secure Backend**: A robust Express-based backend with support for AI integration and data handling.
+- **Responsive Design**: 
+Optimized for both desktop and mobile devices to ensure a seamless experience.
+- **Interactive Reviews**: 
+See average ratings and detailed reviews for each provider.
+- **Secure Backend**: 
+A robust Express-based backend with support for AI integration and data handling.
 
 ## Installation
 
