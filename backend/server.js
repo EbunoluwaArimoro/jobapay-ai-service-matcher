@@ -48,7 +48,7 @@ app.post("/classify", async (req, res) => {
 
     res.json({ category: prediction });
   } catch (err) {
-    console.error("🔥 Cohere error:", err.message);
+    console.error("🔥 Cohere FULL error:", err);
     res.status(500).json({ error: "Cohere classification failed." });
   }
 });
