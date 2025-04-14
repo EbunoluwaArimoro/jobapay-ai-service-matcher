@@ -1,4 +1,3 @@
-cohere.init(process.env.COHERE_API_KEY);
 const express = require("express");
 const cors = require("cors");
 const { CohereClient } = require("cohere-ai");
@@ -37,7 +36,9 @@ app.post("/classify", async (req, res) => {
   try {
     const response = await cohere.generate({
       model: "command",
-      prompt: `You are a smart assistant. Based on the user input, identify the closest matching service category from this list:\n\nAC Repair, Electrician, Plumber, Babysitting, Installation, Fridge Repair, Solar Installation, Painting, Generator Repair, Cleaning, Cooking Assistance, Carpentry\n\nUser input: "${input}"\n\nMatching category:`,
+      prompt: `You are a smart assistant. Based on the user input, identify the closest matching service category from this list:\n\n${categories.join(
+        ", "
+      )}\n\nUser input: "${input}"\n\nMatching category:`,
       max_tokens: 20,
       temperature: 0.2,
     });
