@@ -25,7 +25,7 @@ function App() {
 
   const classifyService = async (userInput) => {
     try {
-      const response = await fetch("https://jobapay-ai-service-matcher-backend.onrender.com", {
+      const response = await fetch("https://jobapay-ai-service-matcher-backend.onrender.com/classify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input: userInput }),

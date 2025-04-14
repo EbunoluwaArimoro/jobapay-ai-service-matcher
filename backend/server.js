@@ -1,3 +1,4 @@
+cohere.init(process.env.COHERE_API_KEY);
 const express = require("express");
 const cors = require("cors");
 const { CohereClient } = require("cohere-ai");
@@ -29,30 +30,25 @@ const categories = [
 app.post("/classify", async (req, res) => {
   const { input } = req.body;
 
-  const prompt = `
-Given the user's request, classify it into one of these categories:
-${categories.join(", ")}
-
-Only return the exact category name. No explanation.
-
-User: "${input}"
-Category:
-  `;
+  if (!input) {
+    return res.status(400).json({ error: "Input is required." });
+  }
 
   try {
     const response = await cohere.generate({
       model: "command",
-      prompt,
-      max_tokens: 10,
-      temperature: 0,
+      prompt: `You are a smart assistant. Based on the user input, identify the closest matching service category from this list:\n\nAC Repair, Electrician, Plumber, Babysitting, Installation, Fridge Repair, Solar Installation, Painting, Generator Repair, Cleaning, Cooking Assistance, Carpentry\n\nUser input: "${input}"\n\nMatching category:`,
+      max_tokens: 20,
+      temperature: 0.2,
     });
 
-    const prediction = response.generations[0]?.text.trim();
-    console.log("🎯 Cohere predicted:", prediction);
+    const prediction = response.body.generations[0]?.text?.trim();
+    console.log("🎯 Predicted:", prediction);
+
     res.json({ category: prediction });
   } catch (err) {
-    console.error("🔥 Cohere Error:", err.message || err);
-    res.status(500).json({ error: "Cohere generation failed." });
+    console.error("🔥 Cohere error:", err.message);
+    res.status(500).json({ error: "Cohere classification failed." });
   }
 });
 
