@@ -1,4 +1,3 @@
-// Home.jsx
 import React, { useState } from "react";
 import ProviderForm from "../components/ProviderForm";
 import ProviderList from "../components/ProviderList";
@@ -12,16 +11,16 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   const locationGroups = {
-    Ibadan: ["Dugbe", "Akobo", "Iyana Church", "Challenge", "Ring Road", "Mokola", "Bodija"],
-    Lagos: ["Lekki", "Ajah", "Ikorodu", "Surulere", "Magodo", "Yaba", "Ikeja"]
+    ibadan: ["dugbe", "akobo", "iyana church", "challenge", "ring road", "mokola", "bodija"],
+    lagos: ["lekki", "ajah", "ikorodu", "surulere", "magodo", "yaba", "ikeja"]
   };
 
   const normalizeLocation = (input) => {
     const lower = input.toLowerCase();
-    for (const [city, subareas] of Object.entries(locationGroups)) {
-      if (city.toLowerCase() === lower) return subareas;
+    if (locationGroups[lower]) {
+      return locationGroups[lower]; // user typed "Ibadan" → return all subareas
     }
-    return [input];
+    return [lower]; // user typed "Dugbe" → return Dugbe only
   };
 
   const classifyService = async (userInput) => {
@@ -57,9 +56,7 @@ export default function Home() {
 
     const results = mockProviders.filter(
       (provider) =>
-        normalizedLocations.some((loc) =>
-          provider.location.toLowerCase().includes(loc.toLowerCase())
-        ) &&
+        normalizedLocations.includes(provider.location.toLowerCase()) &&
         provider.service.toLowerCase().includes(predictedService.toLowerCase())
     );
 
