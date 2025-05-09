@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ProviderCard = ({ provider }) => {
   const [showReviews, setShowReviews] = useState(false);
@@ -35,11 +36,16 @@ const ProviderCard = ({ provider }) => {
           </div>
         )}
       </div>
+
+      <Link to={`/book/${provider.id}`}
+      state={{ provider }}
+      >
+        <button className="mt-4 w-full bg-[#00ABE4] text-white px-4 py-2 rounded-md hover:bg-[#007fa1] transition">
+          Book Now
+        </button>
+      </Link>
     </div>
   );
 };
 
 export default ProviderCard;
-
-// This component is responsible for displaying the details of a single service provider.
-// It takes in a prop called `provider`, which is an object containing the provider's details.
