@@ -26,3 +26,23 @@ A robust Express-based backend with support for AI integration and data handling
 1. Clone the repository:
    ```bash
    git clone https://github.com/EbunoluwaArimoro/jobapay-ai-service-matcher.git
+   cd jobapay-ai-service-matcher
+
+2. Setup the Frontend
+   ```bash
+   cd frontend
+   npm install
+   npm start
+
+3. Setup the Backend
+   ```bash
+   cd ../backend
+   npm install
+   npm run dev
+   
+4. Set Your Cohere API Key
+
+Create a .env file in the backend folder and add the following:
+```bash
+   COHERE_API_KEY=your_api_key_here
+   PORT=5000
